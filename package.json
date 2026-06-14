@@ -1,0 +1,22 @@
+{
+  "name": "pinecone-mcp-server",
+  "version": "1.0.0",
+  "description": "Custom MCP server exposing Pinecone vector search as an agentic-search tool",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@pinecone-database/pinecone": "^3.0.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
