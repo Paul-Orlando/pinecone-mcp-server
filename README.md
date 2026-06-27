@@ -53,9 +53,60 @@ npm run dev
 
 ## Endpoints
 
-- `GET /health` — health check
+- `GET /health` — health check (no auth required)
 - `POST /mcp` — MCP endpoint (Streamable HTTP transport)
 - `GET /sse` — SSE transport for legacy clients
+
+## Authentication
+
+Every request except `GET /health` must include an `X-API-Key` header:
+
+```
+X-API-Key: your-secret-key
+```
+
+Missing or invalid keys return HTTP 401.
+
+## Rate Limits
+
+10 requests per IP per hour on all routes except `GET /health`. One `agentic-search` query may generate multiple internal requests. Returns HTTP 429 when exceeded.
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `PINECONE_API_KEY` | Pinecone API key |
+| `OPENROUTER_API_KEY` | OpenRouter API key (used for embeddings) |
+| `PINECONE_INDEX` | Pinecone index name (default: `mcp-server-v1`) |
+| `PINECONE_NAMESPACE` | Pinecone namespace (default: `arxiv-papers`) |
+| `PORT` | Server port (default: `3001`) |
+| `MCP_API_KEY` | Secret key required on all non-health requests |
+
+Generate a key with:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+## MCP Client Configuration
+
+Example Claude Desktop config with authentication:
+
+```json
+{
+  "mcpServers": {
+    "pinecone-agentic-search": {
+      "url": "https://pinecone-mcp-server-production-189c.up.railway.app/mcp",
+      "headers": {
+        "X-API-Key": "your-secret-key"
+      }
+    }
+  }
+}
+```
+
+## Usage Note
+
+This is a portfolio demonstration server. For production use, clone the repo and deploy your own instance with your own API keys.
 
 ## Deploy to Railway
 
