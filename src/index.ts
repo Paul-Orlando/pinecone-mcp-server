@@ -104,6 +104,13 @@ const limiter = rateLimit({
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: (req) => {
+    const forwarded = req.headers['x-forwarded-for'];
+    if (forwarded) {
+      return forwarded.toString().split(',')[0].trim();
+    }
+    return req.ip || 'unknown';
+  },
   handler: (_req: Request, res: Response) => {
     res.status(429).json({
       error: "Rate limit exceeded.",
@@ -146,7 +153,6 @@ async function handleMcp(req: Request, res: Response): Promise<void> {
 
 // ── Express app ───────────────────────────────────────────────────────────────
 const app = express();
-app.set('trust proxy', 1);
 
 // Health check — no rate limit, no auth
 app.get("/health", (_req, res) => {
@@ -159,10 +165,6 @@ app.get("/health", (_req, res) => {
 });
 
 // All other routes: rate limit → auth → handler
-app.use((req, _res, next) => {
-  console.log(`[rate-limit] IP: ${req.ip}, path: ${req.path}, forwarded-for: ${req.headers['x-forwarded-for']}`);
-  next();
-});
 app.use(limiter);
 app.use(requireApiKey);
 
