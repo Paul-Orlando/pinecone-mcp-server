@@ -69,7 +69,7 @@ Missing or invalid keys return HTTP 401.
 
 ## Rate Limits
 
-10 requests per IP per hour on all routes except `GET /health`. One `agentic-search` query may generate multiple internal requests. Returns HTTP 429 when exceeded.
+5 requests per IP per hour on all routes except `GET /health`. One `agentic-search` query may generate multiple internal requests. Returns HTTP 429 when exceeded.
 
 ## Environment Variables
 

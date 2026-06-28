@@ -101,7 +101,7 @@ function createMcpServer(): McpServer {
 // ── Rate limiter ──────────────────────────────────────────────────────────────
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  limit: 10,
+  limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: (req) => {
@@ -115,7 +115,7 @@ const limiter = rateLimit({
     res.status(429).json({
       error: "Rate limit exceeded.",
       message:
-        "This is a portfolio demonstration server limited to 10 requests per hour. Clone the repo and deploy your own instance: github.com/Paul-Orlando/pinecone-mcp-server",
+        "This is a portfolio demonstration server limited to 5 requests per hour. Clone the repo and deploy your own instance: github.com/Paul-Orlando/pinecone-mcp-server",
     });
   },
 });
