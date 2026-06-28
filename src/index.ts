@@ -159,6 +159,10 @@ app.get("/health", (_req, res) => {
 });
 
 // All other routes: rate limit → auth → handler
+app.use((req, _res, next) => {
+  console.log(`[rate-limit] IP: ${req.ip}, path: ${req.path}, forwarded-for: ${req.headers['x-forwarded-for']}`);
+  next();
+});
 app.use(limiter);
 app.use(requireApiKey);
 
