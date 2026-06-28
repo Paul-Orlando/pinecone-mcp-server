@@ -146,6 +146,7 @@ async function handleMcp(req: Request, res: Response): Promise<void> {
 
 // ── Express app ───────────────────────────────────────────────────────────────
 const app = express();
+app.set('trust proxy', 1);
 
 // Health check — no rate limit, no auth
 app.get("/health", (_req, res) => {
