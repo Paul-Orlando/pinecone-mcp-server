@@ -14,19 +14,6 @@ dependencies.
 
 ---
 
-## 🔗 Live Endpoint
-
-```
-https://pinecone-mcp-server-production-189c.up.railway.app/mcp
-```
-
-Health check:
-```
-https://pinecone-mcp-server-production-189c.up.railway.app/health
-```
-
----
-
 ## Architecture
 
 ```
@@ -204,7 +191,7 @@ Add this to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "pinecone-agentic-search": {
-      "url": "https://pinecone-mcp-server-production-189c.up.railway.app/mcp",
+      "url": "https://your-url.up.railway.app/mcp",
       "headers": {
         "X-API-Key": "your-secret-key"
       }
